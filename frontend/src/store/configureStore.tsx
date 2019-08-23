@@ -1,7 +1,11 @@
-import { createStore, compose, applyMiddleware, combineReducers } from "redux";
+import { createStore, compose, applyMiddleware, combineReducers, Dispatch, Action, AnyAction } from 'redux'
 import { createLogger } from 'redux-logger';
 import thunk from "redux-thunk";
 import { messageReducer, IMessageState } from './messages';
+
+export interface IConnectedReduxProps<A extends Action = AnyAction> {
+    dispatch: Dispatch<A>
+}
 
 export interface IApplicationState {
     message: IMessageState

@@ -1,12 +1,11 @@
 import * as React from 'react'
-import { Dispatch, Action, AnyAction } from 'redux'
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 // tslint:disable-next-line: no-submodule-imports
 import 'bootstrap/dist/css/bootstrap.css';
 import { Flex } from 'rebass';
 import { Container, Row } from 'reactstrap';
-import { IApplicationState } from '../store/configureStore';
+import { IApplicationState, IConnectedReduxProps } from '../store/configureStore';
 import { danger, clear } from '../store/messages';
 
 const BackgroundFlex = styled(Flex)`
@@ -21,9 +20,6 @@ interface IMessage {
     message: string,
     type: string
 }
-export interface IConnectedReduxProps<A extends Action = AnyAction> {
-    dispatch: Dispatch<A>
-  }
 
 interface IBingoPageProps {
     message: IMessage

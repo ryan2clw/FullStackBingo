@@ -4,9 +4,9 @@ import { Reducer } from 'redux'
 
 /* Message Actions */
 
-export const success = (message: string) => act(actionTypes.SUCCESS, message);
-export const danger = (message: string) => act(actionTypes.ERROR, message)
-export const clear = () => act(actionTypes.CLEAR);
+export const success = (message: string) => act(actionTypes.ALERT_SUCCESS, message);
+export const danger = (message: string) => act(actionTypes.ALERT_DANGER, message)
+export const clear = () => act(actionTypes.ALERT_CLEAR);
 
 export interface IMessageState {
     readonly type: string,
@@ -20,17 +20,17 @@ const initialState = {
 /* Message Reducer */
 const messageReducer: Reducer<IMessageState> = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SUCCESS:
+        case actionTypes.ALERT_SUCCESS:
             return {
                 message: action.payload,
                 type: 'alert-success',
             };
-        case actionTypes.ERROR:
+        case actionTypes.ALERT_DANGER:
             return {
                 message: action.payload,
                 type: 'alert-danger',
             };
-        case actionTypes.CLEAR:
+        case actionTypes.ALERT_CLEAR:
             return {
                 message: action.payload,
                 type: 'alert-clear',
