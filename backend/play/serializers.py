@@ -1,6 +1,7 @@
 """
 Form the JSON that we need
 """
+import pdb
 from random import sample
 from rest_framework import serializers
 from play.models import Row, Card
@@ -35,3 +36,11 @@ class CardSerializer(serializers.ModelSerializer):
         card_data(card)
         card.save()
         return card
+
+    def to_representation(self, instance):
+        """ Get rid of excess data, makes it easier to consume on the client """
+        ret = super().to_representation(instance)
+        for row in ret['rows']:
+            row.pop('card')
+            row.pop('id')
+        return ret

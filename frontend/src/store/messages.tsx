@@ -1,5 +1,5 @@
 import { action as act } from 'typesafe-actions'
-import actionTypes from './actionTypes';
+import { actionTypes } from './actionTypes';
 import { Reducer } from 'redux'
 
 /* Message Actions */
@@ -8,7 +8,7 @@ export const success = (message: string) => act(actionTypes.ALERT_SUCCESS, messa
 export const danger = (message: string) => act(actionTypes.ALERT_DANGER, message)
 export const clear = () => act(actionTypes.ALERT_CLEAR);
 
-export interface IMessageState {
+export interface IMessage {
     readonly type: string,
     readonly message: string
 }
@@ -18,7 +18,7 @@ const initialState = {
 }
 
 /* Message Reducer */
-const messageReducer: Reducer<IMessageState> = (state = initialState, action) => {
+const messageReducer: Reducer<IMessage> = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ALERT_SUCCESS:
             return {
