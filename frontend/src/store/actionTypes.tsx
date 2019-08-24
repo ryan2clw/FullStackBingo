@@ -18,7 +18,6 @@ export interface IResponse {
 /* Global parsing and error handling for AJAX requests */
 export const handleResponse = (response: IResponse) => {
     return response.text().then((text) => {
-        console.log("handleResponse", text);
         const data = text && JSON.parse(text);
         if (!response.ok) {
             const error = (data && data.message) || response.statusText;

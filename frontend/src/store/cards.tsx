@@ -5,7 +5,7 @@ import { Reducer, AnyAction } from 'redux'
 import { Dispatch } from 'react';
 import { danger, clear } from './messages';
 
-/* Card Actions */
+/* Card Interface */
 
 export interface ICardArray {
     readonly [key: number]: ICard,
@@ -24,22 +24,24 @@ export interface ICard {
     readonly rows: IRow[],
 }
 
-const fetchRequest = (cardCount: number) => act(actionTypes.CARD_REQUEST, cardCount)
+/* Card Actions */
+
+const fetchRequest = (cardCount: number, meta: string) => act(actionTypes.CARD_REQUEST, cardCount, meta)
 const fetchSuccess = (data: ICardArray) => act(actionTypes.CARD_SUCCESS, data)
 const fetchFailure = (error: string) => act(actionTypes.CARD_FAILURE, error)
 
 export const requestNumbers = async (cardCount = 1, dispatch: Dispatch<AnyAction>) => {
-    dispatch(fetchRequest(cardCount))
+    dispatch(fetchRequest(cardCount, "Requesting cards"))
     getCards(cardCount)
         .then(
             (payload) => {
                 return dispatch(fetchSuccess(payload));
             },
             (error) => {
-                dispatch(fetchFailure(error.toString()));
+                dispatch(fetchFailure(error.toString())); // for debugging with redux-logger
                 dispatch(danger(error.toString())); // sends error to the UI
                 setTimeout(() => {
-                    dispatch(clear());
+                    dispatch(clear()); // clear error after 10 seconds from UI
                   }, 10000);
             },
         );
@@ -51,7 +53,7 @@ const initialState = {
     cards: [],
 }
 
-/* Message Reducer */
+/* Card Reducer */
 export const cardReducer: Reducer<ICardArray> = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.CARD_REQUEST:
@@ -59,11 +61,9 @@ export const cardReducer: Reducer<ICardArray> = (state = initialState, action) =
                 ...state,
             };
         case actionTypes.CARD_SUCCESS:
-            /* Successful API call so update dynamic data: state.whatever = action.whatever */
             return {
                 ...state,
                 cards: action.payload,
-                error: "",
             };
         case actionTypes.CARD_FAILURE:
             return {
