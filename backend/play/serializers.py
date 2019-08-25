@@ -4,7 +4,7 @@ Form the JSON that we need
 import pdb
 from random import sample
 from rest_framework import serializers
-from play.models import Row, Card
+from play.models import Row, Card, Ball
 
 def card_data(card):
     """ populates card with 5 rows of random data """
@@ -43,4 +43,18 @@ class CardSerializer(serializers.ModelSerializer):
         for row in ret['rows']:
             row.pop('card')
             row.pop('id')
+        return ret
+
+class BallSerializer(serializers.ModelSerializer):
+    """ serializes and validates balls """
+    class Meta:
+        """ ball json """
+        model = Ball
+        fields = ['num_value', 'updated_at', 'is_played']
+
+    def to_representation(self, instance):
+        """ Get rid of excess data, makes it easier to consume on the client """
+        ret = super().to_representation(instance)
+        ret.pop('updated_at')
+        ret.pop('is_played')
         return ret

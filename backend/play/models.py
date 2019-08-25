@@ -23,3 +23,33 @@ class Row(models.Model):
     def __str__(self):
         return self.b_val + " " + self.i_val + " " + self.n_val + "\
             " + self.g_val + " " + self.o_val
+
+class Ball(models.Model):
+    """
+    The ball in a ball-blower. Represents a random number 1-75.
+    """
+    num_value = models.IntegerField()
+    updated_at = models.DateTimeField(auto_now_add=True)
+    is_played = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.num_value)
+
+class MatchSmiley(models.Model):
+    """ Derived from card data, each column is a number on a specific card"""
+    one_value = models.CharField(max_length=3)
+    two_value = models.CharField(max_length=3)
+    three_value = models.CharField(max_length=3)
+    four_value = models.CharField(max_length=3)
+    five_value = models.CharField(max_length=3)
+    six_value = models.CharField(max_length=3)
+    seven_value = models.CharField(max_length=3)
+    eight_value = models.CharField(max_length=3)
+    nine_value = models.CharField(max_length=3)
+    ten_value = models.CharField(max_length=3)
+    eleven_value = models.CharField(max_length=3)
+    twelve_value = models.CharField(max_length=3)
+    thirteen_value = models.CharField(max_length=3)
+    fourteen_value = models.CharField(max_length=3)
+    needed_to_win = models.IntegerField()
+    left = models.IntegerField()
