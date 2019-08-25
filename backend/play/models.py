@@ -29,7 +29,7 @@ class Ball(models.Model):
     The ball in a ball-blower. Represents a random number 1-75.
     """
     num_value = models.IntegerField()
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     is_played = models.BooleanField(default=False)
 
     def __str__(self):
